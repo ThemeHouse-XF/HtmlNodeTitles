@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="ThemeHouse_HtmlNodeTitles" title="[⌂] HTML in Node Titles" version_string="1.0.7a" version_id="1447261019" url="http://xf.themehouse.io/" install_callback_class="ThemeHouse_Install" install_callback_method="install" uninstall_callback_class="ThemeHouse_Install" uninstall_callback_method="uninstall">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications>
+    <modification template="category_edit" modification_key="th_categoryEdit_htmlNodeTitles" description="Allows HTML in category title in category edit." execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(<xen:breadcrumb[^>]*>){\$category\.title}(</xen:breadcrumb>)#]]></find>
+      <replace><![CDATA[${1}{xen:helper snippet, $category.title, 0, {xen:array 'stripHtml=true'}}${2}]]></replace>
+    </modification>
+    <modification template="forum_edit" modification_key="th_forumEdit_htmlNodeTitles" description="Allows HTML in forum title in forum edit." execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(<xen:breadcrumb[^>]*>){\$forum\.title}(</xen:breadcrumb>)#]]></find>
+      <replace><![CDATA[${1}{xen:helper snippet, $forum.title, 0, {xen:array 'stripHtml=true'}}${2}]]></replace>
+    </modification>
+    <modification template="link_forum_edit" modification_key="th_linkForumEdit_htmlNodeTitles" description="Allows HTML in link forum title in link forum edit." execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(<xen:breadcrumb[^>]*>){\$link\.title}(</xen:breadcrumb>)#]]></find>
+      <replace><![CDATA[${1}{xen:helper snippet, $link.title, 0, {xen:array 'stripHtml=true'}}${2}]]></replace>
+    </modification>
+    <modification template="node_list" modification_key="th_nodeList_htmlNodeTitles" description="Allows HTML in node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$node.title}]]></find>
+      <replace><![CDATA[{xen:raw $node.title}]]></replace>
+    </modification>
+    <modification template="page_edit" modification_key="th_pageEdit_htmlNodeTitles" description="Allows HTML in page title in page edit." execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(<xen:breadcrumb[^>]*>){\$page\.title}(</xen:breadcrumb>)#]]></find>
+      <replace><![CDATA[${1}{xen:helper snippet, $page.title, 0, {xen:array 'stripHtml=true'}}${2}]]></replace>
+    </modification>
+    <modification template="permission_node_user_group" modification_key="th_permissionNodeUserGroup_htmlNodeTitles" description="Allows HTML in node title in node permissions." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:title>{xen:phrase node_permissions}: {$node.title} - {$userGroup.title}</xen:title>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:adminlink node-permissions, $node}">{xen:phrase permissions}: {$node.title}</xen:breadcrumb>]]></find>
+      <replace><![CDATA[<xen:title>{xen:phrase node_permissions}: {xen:helper snippet, $node.title, 0, {xen:array 'stripHtml=true'}} - {$userGroup.title}</xen:title>
+<xen:h1>{xen:phrase node_permissions}: {xen:raw $node.title} - {$userGroup.title}</xen:h1>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:adminlink node-permissions, $node}">{xen:phrase permissions}: {xen:raw $node.title}</xen:breadcrumb>]]></replace>
+    </modification>
+    <modification template="permission_node_user" modification_key="th_permissionNodeUser_htmlNodeTitles" description="Allows HTML in node title in node permissions." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:title>{xen:phrase node_permissions}: {$node.title} - {$user.username}</xen:title>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:adminlink 'node-permissions', $node}">{xen:phrase permissions}: {$node.title}</xen:breadcrumb>]]></find>
+      <replace><![CDATA[<xen:title>{xen:phrase node_permissions}: {xen:helper snippet, $node.title, 0, {xen:array 'stripHtml=true'}} - {$user.username}</xen:title>
+<xen:h1>{xen:phrase node_permissions}: {xen:raw $node.title} - {$user.username}</xen:h1>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:adminlink node-permissions, $node}">{xen:phrase permissions}: {xen:raw $node.title}</xen:breadcrumb>]]></replace>
+    </modification>
+    <modification template="permission_node" modification_key="th_permissionNode_htmlNodeTitles" description="Allows HTML in node title in node permissions." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$node.title}]]></find>
+      <replace><![CDATA[{xen:raw $node.title}]]></replace>
+    </modification>
+  </admin_template_modifications>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="controller_pre_dispatch" execute_order="10" callback_class="ThemeHouse_Listener_ControllerPreDispatch" callback_method="controllerPreDispatch" active="1" hint="" description=""/>
+    <listener event_id="file_health_check" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_FileHealthCheck" callback_method="fileHealthCheck" active="1" hint="" description=""/>
+    <listener event_id="init_dependencies" execute_order="10" callback_class="ThemeHouse_Listener_InitDependencies" callback_method="initDependencies" active="1" hint="" description=""/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassModel" active="0" hint="XenForo_Model_Node" description="XenForo_Model_Node (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_Prefix_Categories" description="XenForo_Route_Prefix_Categories (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_Prefix_Forums" description="XenForo_Route_Prefix_Forums (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_Prefix_LinkForums" description="XenForo_Route_Prefix_LinkForums (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_Prefix_Pages" description="XenForo_Route_Prefix_Pages (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassDataWriter" active="0" hint="XenForo_DataWriter_Category" description="XenForo_DataWriter_Category (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassDataWriter" active="0" hint="XenForo_DataWriter_Forum" description="XenForo_DataWriter_Forum (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassDataWriter" active="0" hint="XenForo_DataWriter_LinkForum" description="XenForo_DataWriter_LinkForum (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassDataWriter" active="0" hint="XenForo_DataWriter_Page" description="XenForo_DataWriter_Page (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_PrefixAdmin_Categories" description="XenForo_Route_PrefixAdmin_Categories (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_PrefixAdmin_Forums" description="XenForo_Route_PrefixAdmin_Forums (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_PrefixAdmin_LinkForums" description="XenForo_Route_PrefixAdmin_LinkForums (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_PrefixAdmin_Nodes" description="XenForo_Route_PrefixAdmin_Node (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_PrefixAdmin_Pages" description="XenForo_Route_PrefixAdmin_Pages (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="0" hint="XenForo_Route_PrefixAdmin_NodePermissions" description="XenForo_Route_PrefixAdmin_NodePermissions (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class_datawriter" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassDataWriter" active="1" hint="" description="(For XenForo 1.1 and below)" compatibility_switch="1"/>
+    <listener event_id="load_class_model" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassModel" active="1" hint="" description="(For XenForo 1.1 and below)" compatibility_switch="1"/>
+    <listener event_id="load_class_route_prefix" execute_order="10" callback_class="ThemeHouse_HtmlNodeTitles_Listener_LoadClass" callback_method="loadClassRoutePrefix" active="1" hint="" description="(For XenForo 1.1 and below)" compatibility_switch="1"/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups/>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases/>
+  <route_prefixes/>
+  <style_properties/>
+  <templates/>
+  <public_template_modifications>
+    <modification template="category_view" modification_key="th_categoryView_htmlNodeTitles" description="Allows HTML in category title in category view." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:title>{$category.title}</xen:title>]]></find>
+      <replace><![CDATA[<xen:title>{xen:helper snippet, $category.title, 0, {xen:array 'stripHtml=true'}}</xen:title>
+<xen:h1>{xen:raw $category.title}</xen:h1>]]></replace>
+    </modification>
+    <modification template="footer" modification_key="th_copyrightNotice_htmlNodeTitles" description="Copyright notice for [⌂] HTML in Node Titles" execution_order="1" enabled="1" action="callback">
+      <find><![CDATA[/{xen:phrase (?:xenforo|extra)_copyright}/]]></find>
+      <replace><![CDATA[ThemeHouse_Listener_InitDependencies::copyrightNotice]]></replace>
+    </modification>
+    <modification template="forum_view" modification_key="th_forumView_htmlNodeTitles" description="Allows HTML in forum title in forum view." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:title>{$forum.title}{xen:helper pagenumber, $page}</xen:title>
+<xen:h1>{$forum.title}</xen:h1>]]></find>
+      <replace><![CDATA[<xen:title>{xen:helper snippet, $forum.title, 0, {xen:array 'stripHtml=true'}}{xen:helper pagenumber, $page}</xen:title>
+<xen:h1>{xen:raw $forum.title}</xen:h1>]]></replace>
+    </modification>
+    <modification template="member_card" modification_key="th_memberCard_htmlNodeTitles" description="Removes HTML from node titles in member card." execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(<a[^>]*>)({\$user\.activity\.itemTitle})(</a>)#]]></find>
+      <replace><![CDATA[${1}{xen:helper snippet, ${2}, 0, {xen:array 'stripHtml=true'}}${3}]]></replace>
+    </modification>
+    <modification template="member_view" modification_key="th_memberView_htmlNodeTitles" description="Removes HTML from node titles in member profile." execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(<a[^>]*>)({\$user\.activity\.itemTitle})(</a>)#]]></find>
+      <replace><![CDATA[${1}{xen:helper snippet, ${2}, 0, {xen:array 'stripHtml=true'}}${3}]]></replace>
+    </modification>
+    <modification template="news_feed_item_thread_insert" modification_key="th_newsFeedItemThreadInsert_htmlNodeTitles" description="Adds forum node title to thread insert news feed items." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$content.node_title}]]></find>
+      <replace><![CDATA[{xen:raw $content.node_title}]]></replace>
+    </modification>
+    <modification template="node_category_level_1" modification_key="th_nodeCategoryLevel1_htmlNodeTitles" description="Allows HTML in category node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$category.title}]]></find>
+      <replace><![CDATA[{xen:raw $category.title}]]></replace>
+    </modification>
+    <modification template="node_category_level_2" modification_key="th_nodeCategoryLevel2_htmlNodeTitles" description="Allows HTML in category node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$category.title}]]></find>
+      <replace><![CDATA[{xen:raw $category.title}]]></replace>
+    </modification>
+    <modification template="node_category_level_n" modification_key="th_nodeCategoryLevelN_htmlNodeTitles" description="Allows HTML in category node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$category.title}]]></find>
+      <replace><![CDATA[{xen:raw $category.title}]]></replace>
+    </modification>
+    <modification template="node_forum_level_2" modification_key="th_nodeForumLevel2_htmlNodeTitles" description="Allows HTML in forum node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$forum.title}]]></find>
+      <replace><![CDATA[{xen:raw $forum.title}]]></replace>
+    </modification>
+    <modification template="node_forum_level_n" modification_key="th_nodeForumLevelN_htmlNodeTitles" description="Allows HTML in forum node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$forum.title}]]></find>
+      <replace><![CDATA[{xen:raw $forum.title}]]></replace>
+    </modification>
+    <modification template="node_link_level_2" modification_key="th_nodeLinkLevel1_htmlNodeTitles" description="Allows HTML in link forum node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$link.title}]]></find>
+      <replace><![CDATA[{xen:raw $link.title}]]></replace>
+    </modification>
+    <modification template="node_link_level_n" modification_key="th_nodeLinkLevelN_htmlNodeTitles" description="Allows HTML in link node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$link.title}]]></find>
+      <replace><![CDATA[{xen:raw $link.title}]]></replace>
+    </modification>
+    <modification template="node_page_level_2" modification_key="th_nodePageLevel2_htmlNodeTitles" description="Allows HTML in page node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$page.title}]]></find>
+      <replace><![CDATA[{xen:raw $page.title}]]></replace>
+    </modification>
+    <modification template="node_page_level_n" modification_key="th_nodePageLevelN_htmlNodeTitles" description="Allows HTML in page node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$page.title}]]></find>
+      <replace><![CDATA[{xen:raw $page.title}]]></replace>
+    </modification>
+    <modification template="th_node_level_2_socialgroups" modification_key="th_nodeSocialCategoryLevel2_htmlNodeTitles" description="Allows HTML in social category node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$forum.title}]]></find>
+      <replace><![CDATA[{xen:raw $forum.title}]]></replace>
+    </modification>
+    <modification template="th_node_level_n_socialgroups" modification_key="th_nodeSocialCategoryLevelN_htmlNodeTitles" description="Allows HTML in social category node title in node list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$forum.title}]]></find>
+      <replace><![CDATA[{xen:raw $forum.title}]]></replace>
+    </modification>
+    <modification template="online_list" modification_key="th_onlineList_htmlNodeTitles" description="Removes HTML from node titles to online list." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$user.activityItemTitle}]]></find>
+      <replace><![CDATA[{xen:helper snippet, $user.activityItemTitle, 0, {xen:array 'stripHtml=true'}}]]></replace>
+    </modification>
+    <modification template="quick_navigation_menu" modification_key="th_quickNavigationMenu_htmlNodeTitles" description="Allows HTML in node titles in quick navigation menu." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$node.title}]]></find>
+      <replace><![CDATA[{xen:raw $node.title}]]></replace>
+    </modification>
+    <modification template="search_result_page" modification_key="th_searchResultPage_htmlNodeTitles" description="Allows HTML in page node title in search results." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$page.title}]]></find>
+      <replace><![CDATA[{xen:raw $page.title}]]></replace>
+    </modification>
+    <modification template="search_result_post" modification_key="th_searchResultPost_htmlNodeTitles" description="Allows HTML in forum node title in post search results." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$forum.title}]]></find>
+      <replace><![CDATA[{xen:raw $forum.title}]]></replace>
+    </modification>
+    <modification template="search_result_thread" modification_key="th_searchResultThread_htmlNodeTitles" description="Allows HTML in forum node title in thread search results." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$forum.title}]]></find>
+      <replace><![CDATA[{xen:raw $forum.title}]]></replace>
+    </modification>
+    <modification template="th_social_category_view_socialgroups" modification_key="th_socialCategoryView_htmlNodeTitles" description="Allows HTML in social category title in social category view." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:title>{$forum.title}{xen:helper pagenumber, $page}</xen:title>
+<xen:h1>{$forum.title}</xen:h1>]]></find>
+      <replace><![CDATA[<xen:title>{xen:helper snippet, $forum.title, 0, {xen:array 'stripHtml=true'}}{xen:helper pagenumber, $page}</xen:title>
+<xen:h1>{xen:raw $forum.title}</xen:h1>]]></replace>
+    </modification>
+    <modification template="thread_list_item" modification_key="th_threadListItem_htmlNodeTitles" description="Allows HTML in forum node title in threads lists." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$thread.forum.title}]]></find>
+      <replace><![CDATA[{xen:raw $thread.forum.title}]]></replace>
+    </modification>
+    <modification template="thread_view" modification_key="th_threadView_htmlNodeTitles" description="Allows HTML in forum node title in thread description." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$forum.title}]]></find>
+      <replace><![CDATA[{xen:raw $forum.title}]]></replace>
+    </modification>
+  </public_template_modifications>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
